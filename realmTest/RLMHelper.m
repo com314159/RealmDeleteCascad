@@ -38,14 +38,11 @@
         if (![RLMHelper isIgnoredProperty:propertyName]) {
             id value = [object valueForKey:keys];
             
-            NSLog(@"read value for propertyName %@",propertyName);
-            
             [self checkAndDeleteValue:value inRealm:realm];
         }
         
     }
     
-    NSLog(@"Delete Object %@",object);
     [realm deleteObject:object];
     
     if (useTransaction) {
@@ -64,14 +61,17 @@
         
         RLMArray *array = value;
         
+        NSMutableArray *mutableArray = [NSMutableArray array];
+        
         for (NSUInteger i=0;i<array.count; ++i) {
-            
             id arrayValue = array[i];
-            
-            [self checkAndDeleteValue:arrayValue inRealm:realm];
-            
+            [mutableArray addObject:arrayValue];
         }
         
+        for (NSUInteger i=0;i<mutableArray.count; ++i) {
+            id arrayValue = mutableArray[i];
+            [self checkAndDeleteValue:arrayValue inRealm:realm];
+        }
     }
 }
 
