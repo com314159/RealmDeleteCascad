@@ -42,7 +42,7 @@
     arrayModel.otherModel = [[LastModel alloc] init];
     
     ArrayModel *arrayModel1 = [[ArrayModel alloc] init];
-    arrayModel1.arrayValue = @"test2";
+    arrayModel1.arrayValue = @"test1";
     arrayModel1.otherModel = [[LastModel alloc] init];
     
     
@@ -51,12 +51,14 @@
     arrayModel2.otherModel = [[LastModel alloc] init];
     
     ArrayModel *arrayModel3 = [[ArrayModel alloc] init];
-    arrayModel2.arrayValue = @"test2";
+    arrayModel2.arrayValue = @"test3";
     arrayModel2.otherModel = [[LastModel alloc] init];
     
     [model.assets addObject:arrayModel];
     [model.assets addObject:arrayModel2];
     [model.assets addObject:arrayModel3];
+    [model.assets addObject:arrayModel3];
+    [model.assets addObject:arrayModel1];
     model.model = arrayModel1;
     
     RLMRealm *realm = [RLMRealm defaultRealm];
@@ -67,9 +69,8 @@
     
     [realm commitWriteTransaction];
     
-    
+
     [RLMHelper deleteModelCascad:model inRealm:realm];
-    
 }
 
 - (void)didReceiveMemoryWarning {

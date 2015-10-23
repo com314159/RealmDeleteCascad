@@ -20,7 +20,14 @@
 }
 
 + (void) deleteModelCascad:(id)object inRealm:(RLMRealm *)realm  userTransaction:(BOOL)useTransaction {
-    if (object == nil || realm == nil) {
+    if (object == nil || realm == nil || ![object isKindOfClass:[RLMObject class]]) {
+        return ;
+    }
+    
+    RLMObject *rlmObject = object;
+    
+    if (rlmObject.isInvalidated) {
+        NSLog(@"object is invalid");
         return ;
     }
     
@@ -36,6 +43,7 @@
         NSString *propertyName = [dict objectForKey:keys];
         
         if (![RLMHelper isIgnoredProperty:propertyName]) {
+            
             id value = [object valueForKey:keys];
             
             [self checkAndDeleteValue:value inRealm:realm];
